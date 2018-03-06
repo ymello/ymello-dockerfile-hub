@@ -1,0 +1,77 @@
+FROM php:7.0.17-fpm
+MAINTAINER devteam@intercase.com.br
+ 
+# Add new source
+RUN echo "deb http://ftp.ca.debian.org/debian unstable main" >> /etc/apt/sources.list
+RUN apt-get update
+ 
+# libcurl
+RUN apt-get install -y libcurl3 libcurl3-dev curl
+ 
+# libxml2
+RUN apt-get install -y libxml2 libxml2-dev
+ 
+# libcurl4-openssl-dev
+RUN apt-get install -y libcurl4-gnutls-dev
+ 
+# libcurl4-openssl-dev
+RUN apt-get install -y libcurl4-openssl-dev
+ 
+# soap
+RUN docker-php-ext-install soap
+ 
+# bcmath
+RUN docker-php-ext-install bcmath
+ 
+# gd
+RUN apt-get install -y libfreetype6-dev libjpeg62-turbo-dev libpng12-dev
+RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/
+RUN docker-php-ext-install gd
+ 
+# intl
+RUN apt-get install -y libicu-dev
+RUN pecl install intl
+RUN docker-php-ext-install intl
+ 
+# mbstring
+RUN docker-php-ext-install mbstring
+ 
+# mcrypt
+RUN apt-get install -y libmcrypt-dev
+RUN docker-php-ext-install mcrypt
+ 
+# PDO
+RUN docker-php-ext-install pdo_mysql
+RUN apt-get install -y libpq-dev
+RUN docker-php-ext-install pdo_pgsql
+ 
+# simpleXML
+RUN docker-php-ext-install xmlrpc
+ 
+# xls
+RUN apt-get install -y libxslt-dev
+RUN docker-php-ext-install xsl
+ 
+# zip
+RUN docker-php-ext-install zip
+ 
+# json
+RUN docker-php-ext-install json
+ 
+# iconv
+RUN docker-php-ext-install iconv
+ 
+# gulp
+#   RUN curl -sL https://deb.nodesource.com/setup_4.x | bash -
+RUN apt-get install --yes nodejs
+RUN apt-get install -y build-essential
+ 
+# npm
+RUN apt-get install -y npm
+#RUN npm install -y gulp -g
+#RUN ln -s /usr/bin/nodejs /usr/bin/node
+# composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+ 
+# git
+RUN apt-get install -y git
