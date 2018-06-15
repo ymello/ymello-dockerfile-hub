@@ -1,0 +1,38 @@
+FROM php:7.1.18-fpm
+MAINTAINER devteam@intercase.com.br
+ 
+# Add new source
+RUN echo "deb http://ftp.ca.debian.org/debian unstable main" >> /etc/apt/sources.list
+RUN apt-get update
+
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+RUN apt-get install -y git
+
+RUN apt-get update -y && apt-get install -y sendmail libpng-dev
+
+RUN docker-php-ext-install gd
+
+RUN apt install libmcrypt-dev
+
+RUN docker-php-ext-configure mcrypt
+
+RUN docker-php-ext-install mcrypt
+
+RUN docker-php-ext-install bcmath
+
+RUN apt-get install -y zlib1g-dev libicu-dev g++
+
+RUN docker-php-ext-configure intl
+
+RUN docker-php-ext-install intl
+
+RUN apt-get install -y libxslt-dev
+
+RUN docker-php-ext-install xsl
+
+RUN docker-php-ext-install zip
+
+RUN docker-php-ext-install pdo_mysql
+
+RUN docker-php-ext-install soap
